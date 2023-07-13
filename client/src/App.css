@@ -9,10 +9,22 @@ label {
 
 input {
   margin-bottom: 10px;
-  width:200px
+  width: 200px;
 }
 
 button {
   margin-bottom: 10px;
-  width:200px
+  width: 200px;
+}
+
+.roulette-container {
+  width: 300px;
+  height: 300px;
+
+  > div {
+    height: 100%;
+    width: 100%;
+    max-height: unset;
+    max-width: unset;
+  }
 }
