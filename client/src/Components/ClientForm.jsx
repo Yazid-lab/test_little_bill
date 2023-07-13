@@ -1,35 +1,71 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+function generateRandomId() {
+  const length = 8 // Specify the desired length of the random ID
+
+  let randomId = ''
+
+  while (randomId.length < length) {
+    randomId += Math.random().toString(36).substring(2)
+  }
+
+  // Trim the random ID to the desired length
+  randomId = randomId.substring(0, length)
+
+  return randomId
+}
+
 export default function ClientForm() {
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
-    birth_date: ''
+    birth_date: '',
   })
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+      [e.target.name]: e.target.value,
+    })
+  }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
-    const { data } = await axios.post('http://127.0.0.1:8000/api/client', formData)
+    const { data } = await axios.post('http://127.0.0.1:8000/clients', {
+      id: generateRandomId(),
+      ...formData,
+    })
     setFormData({
-      first_name: '',
+      first_name: ' ',
       last_name: '',
-      birth_date: ''
+      birth_date: '',
     })
   }
   return (
     <form onSubmit={handleFormSubmit}>
       <label>Nom</label>
-      <input type='text' required name="first_name" value={formData.first_name} onChange={handleChange} />
+      <input
+        type='text'
+        required
+        name='first_name'
+        value={formData.first_name}
+        onChange={handleChange}
+      />
       <label>Prénom</label>
-      <input type='text' required name='last_name' value={formData.last_name} onChange={handleChange} />
+      <input
+        type='text'
+        required
+        name='last_name'
+        value={formData.last_name}
+        onChange={handleChange}
+      />
       <label>Date d'anniversaire</label>
-      <input type='date' required name='birth_date' value={formData.birth_date} onChange={handleChange} />
+      <input
+        type='date'
+        required
+        name='birth_date'
+        value={formData.birth_date}
+        onChange={handleChange}
+      />
       <button type='submit'>Me créer un compte</button>
     </form>
   )

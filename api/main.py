@@ -1,24 +1,19 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-import datetime
 from fastapi.middleware.cors import CORSMiddleware
+import router as client_router
+import model, schema, service
+from database import SessionLocal, engine
 
-
-class Client(BaseModel):
-    first_name: str
-    last_name: str
-    birth_date: datetime.date
+model.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 
+app.include_router(client_router.router)
 origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:3000",
 ]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -26,7 +21,3 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.post("/api/client")
-async def create_client(client: Client):
-    return client
