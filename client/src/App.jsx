@@ -20,7 +20,6 @@ function App() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const returnedPrizeNumber = await createClient(formData);
-    console.log(returnedPrizeNumber);
     setPrizeNumber(returnedPrizeNumber);
     setMustStartSpinning(true);
     setFormData({
@@ -39,7 +38,7 @@ function App() {
   ];
 
   return (
-    <div>
+    <div className="container">
       <div className="roulette-container">
         <Wheel
           mustStartSpinning={mustStartSpinning}
