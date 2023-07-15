@@ -1,7 +1,6 @@
 import "./App.css";
 import React, { useState } from "react";
 import ClientForm from "./Components/ClientForm";
-import createClient from "./Services/client";
 import { Wheel } from "react-custom-roulette";
 function App() {
   const [mustStartSpinning, setMustStartSpinning] = useState(false);
@@ -19,7 +18,7 @@ function App() {
   };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const returnedPrizeNumber = await createClient(formData);
+    const returnedPrizeNumber = Math.floor(Math.random());
     setPrizeNumber(returnedPrizeNumber);
     setMustStartSpinning(true);
     setFormData({
